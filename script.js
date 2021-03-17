@@ -165,11 +165,65 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         });
 
-        
         for (let i = 0; i < input.length; i++){
             input[i].value='';
         }
     });
+
+    //slider
+
+    let slidIndex = 1, // параметр текущего слайда
+        slides = document.querySelectorAll('.slider-item'),
+        prev = document.querySelector('.prev'),
+        next = document.querySelector('.next'),
+        dotsWrap = document.querySelector('.slider-dots'),
+        dots = document.querySelectorAll('.dot');
+
+        showSlides(slidIndex);
+        function showSlides(n){
+
+            if (n > slides.length){
+                slidIndex = 1;
+            }
+            if (n < 1){
+                slidIndex = slides.length;
+            }
+
+            slides.forEach((item)=>item.style.display = 'none');
+            //for (let i = 0; i < slides.length; i++){    // одно и тоже
+            //    slides[i].style.display = 'none';
+            //}
+            dots.forEach((item)=> item.classList.remove('dot-active'));
+
+            slides[slidIndex - 1].style.display = 'block';
+            dots[slidIndex - 1].classList.add('dot-active');
+        }
+
+        function plusSlides (n){
+            showSlides(slidIndex += n);
+        }
+        function cerrentSlide(n){
+            showSlides(slidIndex = n);
+        }
+
+        prev.addEventListener('click', function(){
+            plusSlides(-1);
+        });
+        next.addEventListener('click', function(){
+            plusSlides(1);
+        });
+        dotsWrap.addEventListener('click', function(event){
+            for(let i = 0; i < dots.length + 1; i++){
+                if( event.target.classList.contains('dot') && event.target == dots[i - 1]){
+                    cerrentSlide(i);
+                }
+            }
+        });
+        
+
+
+
+
 });
 
 
